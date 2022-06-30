@@ -9,6 +9,7 @@ let players = ["Player1", "Player2"];
 let p1Name = document.getElementById("p1Name");
 let p2Name = document.getElementById("p2Name");
 let roomName = null;
+let player_count=1;
 
 // let ws = new WebSocket("ws://localhost:9090");
 
@@ -32,7 +33,8 @@ ws.on('connect', function() {
 
 ws.on('updateUserList', ulist => {
     console.log(ulist);
-
+    console.log("&");
+    player_count = ulist.length;
     p1Name.textContent = ulist[0];
     if(ulist.length >= 2){
         p2Name.textContent = ulist[1];
@@ -156,7 +158,8 @@ resetBtn.addEventListener('click', function () {
     ws.send(JSON.stringify(payload));
 });
 function reset() {
-    gameOver = false;
+    if(player_count >=2 )
+        gameOver = false;
     p1.score = 0;
     p2.score = 0;
     p1.display.textContent = 0;
